@@ -102,7 +102,6 @@ class BinarySearchTree
 
     public function __toString()
     {
-        // TODO: Implement __toString() method.
         $res = "";
         $this->generateBSTString($this->root, 0, $res);
         return $res;
@@ -145,4 +144,5 @@ for($i=0;$i<count($nums);$i++)
 // 2  4     8  //
 /////////////////
 $bst->preOrder();
+echo PHP_EOL;
 print($bst);
