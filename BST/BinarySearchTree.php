@@ -6,8 +6,8 @@
  * Time: 16:59
  */
 
-include 'ARRAY\LinkedListStack.php';
-include 'ARRAY\LinkedList.php';
+require_once '../ARRAY/LinkedListStack.php';
+require_once '../ARRAY/LinkedList.php';
 
 class BinaryNode
 {
@@ -120,7 +120,7 @@ class BinarySearchTree
     }
 
     /**
-     *  二分搜索树的层序遍历
+     *  二分搜索树的层序遍历(广度优先遍历)
      */
     public function levelOrder()
     {
@@ -136,6 +136,82 @@ class BinarySearchTree
                 $queue->addLast($cur->right);
         }
     }
+
+    // 寻找二分搜索树的最小元素
+    public function minimum()
+    {
+       if($this->size == 0)
+           throw new Exception("BST is empty.");
+       return $this->__minimum($this->root)->e;
+    }
+
+    private function __minimum($node)
+    {
+        if($node->left == null)
+            return $node;
+        return $this->__minimum($node->left);
+    }
+
+    // 寻找二分搜索树的最大元素(返回以node为根的二分搜索树的最大值所在的节点)
+    public function maximum()
+    {
+        return $this->__maximum($this->root)->e;
+    }
+
+    private function __maximum($node)
+    {
+        if($this->size == 0)
+            throw new Exception("BST is empty.");
+        if($node->right == null)
+            return $node;
+        return $this->__maximum($node->right);
+    }
+
+    // 从二分搜索树中删除最小值所在节点，返回最小值
+    public function removeMin()
+    {
+        $e = $this->minimum();
+        $this->root = $this->__removeMin($this->root);
+        return $e;
+    }
+
+    // 删除以node为根的二分搜索树中的最小节点
+    // 返回删除节点后新的二分搜索树的根
+    private function __removeMin($node)
+    {
+        if($node->left == null)
+        {
+            $rightNode = $node->right;
+            $node->right = null;
+            $this->size -= 1;
+            return $rightNode;
+        }
+        $node->left = $this->__removeMin($node->left);
+        return $node;
+    }
+
+    // 删除以node为根的二分搜索树中的最大节点
+    // 返回删除节点后的二分搜索树的根
+    public function removeMax()
+    {
+        $e = $this->maximum();
+        $this->root = $this->__removeMax($this->root);
+        return $e;
+    }
+
+    private function __removeMax($node)
+    {
+        if($node->right == null)
+        {
+            $leftNode = $node->left;
+            $node->left = null;
+            $this->size -= 1;
+            return $leftNode;
+        }
+        $node->right = $this->__removeMax($node->right);
+        return $node;
+    }
+
 
     public function __toString()
     {
@@ -188,3 +264,11 @@ $bst->preOrderNR();
 print PHP_EOL;
 
 $bst->levelOrder();
+print PHP_EOL;
+
+// 测试removeMin
+$bst->removeMin();
+print $bst;
+// 测试removeMax
+$bst->removeMax();
+print $bst;
