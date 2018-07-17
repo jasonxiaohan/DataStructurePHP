@@ -6,7 +6,10 @@
  * Time: 16:59
  */
 
-class Node
+include 'ARRAY\LinkedListStack.php';
+include 'ARRAY\LinkedList.php';
+
+class BinaryNode
 {
     public $e = null;
     public $left,$right = null;
@@ -54,7 +57,7 @@ class BinarySearchTree
     {
         if ($node == null) {
             $this->size += 1;
-            return new Node($e);
+            return new BinaryNode($e);
         }
 
         if ($e < $node->e) {
@@ -100,6 +103,40 @@ class BinarySearchTree
         $this->__preOrder($node->right);
     }
 
+    // 前序遍历以node为根的二分搜索树，非递归算法
+    public function preOrderNR()
+    {
+       $stack = new \Home\Interfaces\LinkedListStack();
+       $stack->push($this->root);
+       while (!$stack->isEmpty())
+       {
+           $cur = $stack->pop();
+           print $cur->e.PHP_EOL;
+           if($cur->right != null)
+                $stack->push($cur->right);
+           if($cur->left != null)
+                $stack->push($cur->left);
+       }
+    }
+
+    /**
+     *  二分搜索树的层序遍历
+     */
+    public function levelOrder()
+    {
+        $queue = new \Home\Interfaces\LinkedList();
+        $queue->addFirst($this->root);
+        while (!$queue->isEmpty())
+        {
+            $cur = $queue->removeFirst();
+            print $cur->e.PHP_EOL;
+            if($cur->left != null)
+                $queue->addLast($cur->left);
+            if($cur->right != null)
+                $queue->addLast($cur->right);
+        }
+    }
+
     public function __toString()
     {
         $res = "";
@@ -143,6 +180,11 @@ for($i=0;$i<count($nums);$i++)
 //  / \    \   //
 // 2  4     8  //
 /////////////////
-$bst->preOrder();
+//$bst->preOrder();
 echo PHP_EOL;
-print($bst);
+//print($bst);
+$bst->preOrderNR();
+//print $bst;
+print PHP_EOL;
+
+$bst->levelOrder();
