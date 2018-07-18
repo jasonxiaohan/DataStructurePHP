@@ -212,6 +212,58 @@ class BinarySearchTree
         return $node;
     }
 
+    // 从二分搜索树中删除元素为e的节点
+    public function remove($e)
+    {
+        $this->root = $this->__remove($this->root, $e);
+    }
+
+    // 删除以node为根的二分搜索树中值为e的节点，递归算法
+    // 返回删除节点后新的二分搜索树的根
+    private function __remove($node, $e)
+    {
+        if($node == null)
+            return null;
+        if($e < $node->e)
+        {
+            $node->left = $this->__remove($node->left, $e);
+            return $node;
+        }
+        elseif ($e > $node->e)
+        {
+            $node->right = $this->__remove($node->right, $e);
+            return $node;
+        }
+        else {
+            // 待删除节点左子树为空的情况
+            if($node->left == null)
+            {
+                $nodeRight = $node->right;
+                $node->right = null;
+                $this->size -= 1;
+                return $nodeRight;
+            }
+            // 待删除节点右子树为空的情况
+            if($node->right == null)
+            {
+                $nodeLeft = $node->left;
+                $this->size -= 1;
+                $node->left = null;
+                return $nodeLeft;
+            }
+
+            // 待删除节点左右子树均不为空的情况
+
+            // 找到比待删除节点大的最小节点, 即待删除节点右子树的最小节点
+            // 用这个节点顶替待删除节点的位置
+
+            $successor = $this->__minimum($node->right);
+            $successor->right = $this->__removeMin($node->right);
+            $successor->left = $node->left;
+            $node->right = $node->left = null;
+            return $successor;
+        }
+    }
 
     public function __toString()
     {
@@ -244,7 +296,8 @@ class BinarySearchTree
 }
 
 $bst = new BinarySearchTree();
-$nums = [5,3,6,8,4,2];
+//$nums = [5,3,6,8,4,2];
+$nums = [41,58,50,42,53,60,59,63];
 for($i=0;$i<count($nums);$i++)
 {
     $bst->add($nums[$i]);
@@ -258,8 +311,8 @@ for($i=0;$i<count($nums);$i++)
 /////////////////
 //$bst->preOrder();
 echo PHP_EOL;
-//print($bst);
-$bst->preOrderNR();
+print($bst);
+/*$bst->preOrderNR();
 //print $bst;
 print PHP_EOL;
 
@@ -271,4 +324,6 @@ $bst->removeMin();
 print $bst;
 // 测试removeMax
 $bst->removeMax();
+print $bst;*/
+$bst->remove(58);
 print $bst;
