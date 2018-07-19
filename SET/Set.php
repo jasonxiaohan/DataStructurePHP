@@ -6,6 +6,9 @@
  * Time: 7:53
  */
 
+/**
+ * Interface Set 集合
+ */
 interface Set
 {
     public function add($e);

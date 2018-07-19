@@ -108,8 +108,8 @@ class LinkedList
      */
     public function contains($e)
     {
-        $cur = $this->dummyHead;
-        while ($cur->e != null)
+        $cur = $this->dummyHead->next;
+        while ($cur != null)
         {
             if($cur->e == $e)
                 return true;
@@ -151,6 +151,25 @@ class LinkedList
     public function removeLast()
     {
         return $this->remove($this->size - 1);
+    }
+
+    /** 从链表中删除元素e
+     * @param $e
+     */
+    public function removeElement($e)
+    {
+        $prev = $this->dummyHead;
+        while ($prev->next != null) {
+            if($prev->next->e == $e)
+                break;
+            $prev = $prev->next;
+        }
+        if($prev->next != null) {
+           $node = $prev->next;
+           $prev->next = $node->next;
+           $node->next = null;
+           $this->size -= 1;
+        }
     }
 
     public function __toString()
