@@ -3,50 +3,48 @@
  * Created by PhpStorm.
  * User: daixiaohan
  * Date: 2018/7/19
- * Time: 7:55
+ * Time: 17:50
  */
 
-require_once '../BST/BinarySearchTree.php';
+require_once '../ARRAY/LinkedList.php';
 require_once 'Set.php';
 
-/**
- * Class BSTSET 使用二分搜索树实现集合
- */
-class BSTSET implements Set
+class LinkedListSet implements Set
 {
-    private $bst;
+    public $list;
     public function __construct()
     {
-        $this->bst = new BinarySearchTree();
+        $this->list = new \Home\Interfaces\LinkedList();
     }
 
     public function add($e)
     {
         // TODO: Implement add() method.
-        $this->bst->add($e);
+        if(!$this->list->contains($e))
+            $this->list->addFirst($e);
     }
 
     public function remove($e)
     {
         // TODO: Implement remove() method.
-        $this->bst->remove($e);
+        $this->list->removeElement($e);
     }
 
     public function contains($e)
     {
         // TODO: Implement contains() method.
-        return $this->bst->contains($e);
+        return $this->list->contains($e);
     }
 
     public function getSize()
     {
         // TODO: Implement getSize() method.
-        return $this->bst->getSize();
+        return $this->list->getSize();
     }
 
     public function isEmpty()
     {
         // TODO: Implement isEmpty() method.
-        return $this->bst->isEmpty();
+        return $this->list->isEmpty();
     }
 }
