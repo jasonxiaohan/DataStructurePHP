@@ -15,9 +15,15 @@ class MaxHeap
 {
     private $data = null;
 
-    public function __construct($capacity=10)
+    public function __construct($capacity=10, $arr=null)
     {
-        $this->data = new ArrayList($capacity);
+        $this->data = new ArrayList($capacity, $arr);
+        if($arr != null)
+        {
+            $len = count($arr);
+            for ($i = $len; $i >= 0; $i--)
+                $this->siftDown($i);
+        }
     }
 
     public function __toString()
@@ -135,7 +141,7 @@ class MaxHeap
     }
 }
 
-$maxHeap = new MaxHeap();
+/*$maxHeap = new MaxHeap();
 $n = 100;
 for ($i = 0; $i < $n ; $i++)
 {
@@ -155,4 +161,4 @@ for ($i = 1; $i < $n; $i++)
         print "An exception：".$e->getMessage();
     }
 }
-print("Test MaxHeap completed.");
+print("Test MaxHeap completed.");*/

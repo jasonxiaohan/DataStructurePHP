@@ -14,13 +14,17 @@ class ArrayList{
     private $data = [];
     private $size;
 
-    public function __construct($capacity=10)
+    public function __construct($capacity=10, $arr=null)
     {
         for ($i = 0; $i < $capacity; $i++)
-        {
             $this->data[$i] = 0;
-        }
         $this->size = 0;
+        if($arr != null)
+        {
+            for ($i = 0; $i < count($arr); $i++)
+                $this->data[$i] = $arr[$i];
+            $this->size = count($arr);
+        }
     }
 
     public function __toString()
