@@ -233,6 +233,23 @@ class ArrayList{
         if ($index != -1)
             $this->remove($index);
     }
+
+    /** 元素i和元素j进行交换
+     * @param $i
+     * @param $j
+     */
+    public function swap($i, $j)
+    {
+        try{
+            if ($i < 0 || $i >= $this->size || $j < 0 || $j >= $this->size)
+                throw new Exception("Index is illegal.");
+        }catch (Exception $e){
+            print $e->getMessage();
+        }
+        $t = $this->data[$i];
+        $this->data[$i] = $this->data[$j];
+        $this->data[$j] = $t;
+    }
 }
 
 //$list = new ArrayList(2);
