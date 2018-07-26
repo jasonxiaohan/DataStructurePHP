@@ -6,6 +6,10 @@
  * Time: 16:42
  */
 require_once "../ARRAY/Queue.php";
+
+/** 优先队列
+ * Class PriorityQueue
+ */
 class PriorityQueue implements \Home\Interfaces\Queue
 {
     private $maxHeap;
