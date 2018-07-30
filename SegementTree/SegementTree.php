@@ -39,8 +39,7 @@ class SegementTree
         }
         $leftTreeIndex = $this->leftChild($treeIndex);
         $rightTreeIndex = $this->rightChild($treeIndex);
-
-        $mid = $l + (($r - $l) / 2);
+        $mid = intval($l + (($r - $l) / 2));
         $this->buildSegementTree($leftTreeIndex, $l, $mid);
         $this->buildSegementTree($rightTreeIndex, $mid + 1, $r);
         $this->tree[$treeIndex] = $this->merger->merge($this->tree[$leftTreeIndex], $this->tree[$rightTreeIndex]);
@@ -50,14 +49,14 @@ class SegementTree
      * @param $index
      */
     private function leftChild($index) {
-        return (2 * $index) + 1;
+        return intval((2 * $index) + 1);
     }
 
     /** 返回二叉树的数组表示中，一个索引所表示的元素右孩子节点的索引
      * @param $index
      */
     private function rightChild($index){
-        return (2 * $index) + 2;
+        return intval((2 * $index) + 2);
     }
 
     public function get($index) {
@@ -81,7 +80,7 @@ class SegementTree
         $res = "[";
         $count = count($this->tree);
         foreach ($this->tree as $key=>$val) {
-            if($val != null) {
+            if($val !== null) {
                 $res .= $val;
             } else {
                 $res .= "null";
