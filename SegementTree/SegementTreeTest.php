@@ -20,4 +20,8 @@ class SegementTreeTest implements Merger
 $nums = [-2, 0, 3, -5, 2, -1];
 $segmentTreeTest = new SegementTreeTest();
 $segmentTree = new SegementTree($nums, $segmentTreeTest);
-print $segmentTree;
+print $segmentTree.PHP_EOL;
+$result = $segmentTree->query(0, 2);
+print $result.PHP_EOL;
+$result = $segmentTree->query(2, 5);
+print $result.PHP_EOL;

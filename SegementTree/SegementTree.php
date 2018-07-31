@@ -45,6 +45,75 @@ class SegementTree
         $this->tree[$treeIndex] = $this->merger->merge($this->tree[$leftTreeIndex], $this->tree[$rightTreeIndex]);
     }
 
+    /** 返回区间[queryL, queryR]的值
+     * @param $queryL
+     * @param $queryR
+     */
+    public function query($queryL, $queryR)
+    {
+        try
+        {
+            if ($queryL < 0 || $queryL >= count($this->data) || $queryR < 0 || $queryR >= count($this->data) || $queryL > $queryR)
+                throw new Exception("Index is illegal.");
+        }catch (Exception $e){
+            print $e->getMessage();
+            return;
+        }
+        return $this->__query(0, 0, count($this->data) - 1, $queryL, $queryR);
+    }
+
+    /** 在以treeID为根的线段树中[l....r]的范围里，搜索区间[queryL,queryR]的值
+     * @param $treeIndex
+     * @param $l
+     * @param $r
+     * @param $queryL
+     * @param $queryR
+     */
+    private function __query($treeIndex, $l, $r, $queryL, $queryR)
+    {
+        if ($l == $queryL && $r == $queryR) {
+            return $this->tree[$treeIndex];
+        }
+        $mid = intval($l + ($r - $l)/2);
+        $leftTreeIndex = $this->leftChild($treeIndex);
+        $rightTreeIndex = $this->rightChild($treeIndex);
+
+        if ($queryL >= intval($mid + 1))
+            return $this->__query($rightTreeIndex, $mid + 1, $r, $queryL, $queryR);
+        if ($queryR <= $mid)
+            return $this->__query($leftTreeIndex, $l, $mid, $queryL, $queryR);
+
+        $leftResult = $this->__query($leftTreeIndex, $l, $mid, $queryL, $mid);
+        $rightResult = $this->__query($rightTreeIndex, $mid + 1, $r, $mid + 1, $queryR);
+        return $this->merger->merge($leftResult, $rightResult);
+    }
+
+    /**  将index位置的值，更新为e
+     * @param $index
+     * @param $e
+     */
+    public function set($index, $e)
+    {
+        $this->__set(0, 0, count($this->data) - 1, $index, $e) ;
+    }
+
+    private function __set($treeIndex, $l, $r, $index, $e)
+    {
+        if ($l == $r) {
+            $this->tree[$index] = $e;
+            return;
+        }
+        $leftTreeIndex = $this->leftChild($treeIndex);
+        $rightTreeIndex = $this->rightChild($treeIndex);
+
+        $mid = intval($l + ($r - $l) / 2);
+        if ($index >= ($mid + 1))
+            $this->__set($rightTreeIndex, $mid + 1, $r, $index, $e);
+        else
+            $this->__set($leftTreeIndex, $l, $mid, $index, $e);
+        $this->tree[$treeIndex] = $this->merger->merge($this->tree[$leftTreeIndex], $this->tree[$rightTreeIndex]);
+    }
+
     /** 返回二叉树的数组表示中，一个索引所表示的元素左孩子节点的索引
      * @param $index
      */
