@@ -94,13 +94,13 @@ class SegementTree
      */
     public function set($index, $e)
     {
-        $this->__set(0, 0, count($this->data) - 1, $index, $e) ;
+        $this->update(0, 0, count($this->data) - 1, $index, $e) ;
     }
 
-    private function __set($treeIndex, $l, $r, $index, $e)
+    private function update($treeIndex, $l, $r, $index, $e)
     {
         if ($l == $r) {
-            $this->tree[$index] = $e;
+            $this->tree[$treeIndex] = $e;
             return;
         }
         $leftTreeIndex = $this->leftChild($treeIndex);
@@ -108,9 +108,9 @@ class SegementTree
 
         $mid = intval($l + ($r - $l) / 2);
         if ($index >= ($mid + 1))
-            $this->__set($rightTreeIndex, $mid + 1, $r, $index, $e);
+            $this->update($rightTreeIndex, $mid + 1, $r, $index, $e);
         else
-            $this->__set($leftTreeIndex, $l, $mid, $index, $e);
+            $this->update($leftTreeIndex, $l, $mid, $index, $e);
         $this->tree[$treeIndex] = $this->merger->merge($this->tree[$leftTreeIndex], $this->tree[$rightTreeIndex]);
     }
 
