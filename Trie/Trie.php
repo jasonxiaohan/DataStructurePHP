@@ -97,4 +97,33 @@ class Trie
         }
         return true;
     }
+
+    /** 以搜索文字或正则表达式字符串，字符串只包含字母 . 或 a-z 。 . 可以表示任何一个字母
+     * @param $word
+     * @return bool
+     */
+    public function search($word)
+    {
+        return $this->match($this->root, $word, 0);
+    }
+
+    private function match($node, $word, $index)
+    {
+        if (strlen($word) == $index) {
+            return $node->isWorld;
+        }
+        $c = $word[$index];
+        if ($c != ".") {
+            if (!isset($node->next[$c]))
+                return false;
+            return $this->match($node->next[$c], $word, $index+1);
+        } else {
+            $keys = array_keys($node->next);
+            foreach ($keys as $key) {
+                if ($this->match($node->next[$key], $word, $index+1))
+                    return true;
+            }
+            return false;
+        }
+    }
 }

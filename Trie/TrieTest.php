@@ -15,9 +15,9 @@ class TrieTest extends PHPUnit_Framework_TestCase
     public function __construct()
     {
         $this->trie = new Trie();
-        $this->trie->add("php");
-        $this->trie->add("python");
-        $this->trie->add("java");
+        $this->trie->add("bad");
+        $this->trie->add("dad");
+        $this->trie->add("mad");
     }
 
     public function testGetSize()
@@ -33,5 +33,10 @@ class TrieTest extends PHPUnit_Framework_TestCase
     public function testContains()
     {
         $this->assertEquals($this->trie->contains("java"), true);
+    }
+
+    public function testSearch()
+    {
+        $this->assertEquals($this->trie->search("b.."), true);
     }
 }
