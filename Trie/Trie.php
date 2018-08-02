@@ -36,22 +36,35 @@ class Trie
         return $this->size;
     }
 
+    public function add($word){
+        $this->__add($word, $this->root, 0);
+    }
+
     /** 向Trie中添加单词word
      * @param $word
      */
-    public function add($word)
+    private function __add($word, $node, $index)
     {
-        $cur = $this->root;
-        for ($i = 0; $i < strlen($word); $i++) {
-            if (!isset($cur->next[$word[$i]]))
-                $cur->next[$word[$i]] = new Node();
-
-            $cur = $cur->next[$word[$i]];
+//        $cur = $this->root;
+//        for ($i = 0; $i < strlen($word); $i++) {
+//            if (!isset($cur->next[$word[$i]]))
+//                $cur->next[$word[$i]] = new Node();
+//            $cur = $cur->next[$word[$i]];
+//        }
+//        if ($cur->isWorld == false) {
+//            $cur->isWorld = true;
+//            $this->size += 1;
+//        }
+        if(strlen($word) <= $index){
+            if($node->isWorld == false) {
+                $node->isWorld = true;
+                $this->size += 1;
+            }
+            return;
         }
-        if ($cur->isWorld == false) {
-            $cur->isWorld = true;
-            $this->size += 1;
-        }
+       if(!isset($node->next[$word[$index]]))
+           $node->next[$word[$index]] = new Node();
+       $this->__add($word, $node->next[$word[$index]], $index + 1);
     }
 
     /** 检查单词是否存在于prefix中
