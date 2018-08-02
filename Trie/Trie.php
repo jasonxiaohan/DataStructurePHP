@@ -43,13 +43,43 @@ class Trie
     {
         $cur = $this->root;
         for ($i = 0; $i < strlen($word); $i++) {
-            if ($cur->next[$word[$i]] == null)
-                array_push($this->next, $word[$i]);
+            if (!isset($cur->next[$word[$i]]))
+                $cur->next[$word[$i]] = new Node();
+
             $cur = $cur->next[$word[$i]];
         }
         if ($cur->isWorld == false) {
             $cur->isWorld = true;
             $this->size += 1;
         }
+    }
+
+    /** 检查单词是否存在于prefix中
+     * @param $word
+     * @return bool|int
+     */
+    public function contains($word)
+    {
+        $cur = $this->root;
+        for ($i = 0; $i < strlen($word); $i++) {
+            if (!isset($cur->next[$word[$i]]))
+                return false;
+            $cur = $cur->next[$word[$i]];
+        }
+        return $cur->isWorld;
+    }
+
+    /** 查询是否在Trie中有单词以prefix为前缀
+     * @param $prefix
+     */
+    public function isPrefix($prefix)
+    {
+        $cur = $this->root;
+        for ($i = 0; $i < strlen($prefix); $i++) {
+            if (!isset($cur->next[$prefix[$i]]))
+                return false;
+            $cur = $cur->next[$prefix[$i]];
+        }
+        return true;
     }
 }
