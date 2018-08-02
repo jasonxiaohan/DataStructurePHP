@@ -9,8 +9,8 @@
 require_once 'BinarySearchTree.php';
 
 $bst = new BinarySearchTree();
-$nums = [5,3,6,8,4,2];
-//$nums = [41,58,50,42,53,60,59,63];
+//$nums = [5,3,6,8,4,2];
+$nums = [41,58,50,42,53,60,59,63];
 for($i=0;$i<count($nums);$i++)
 {
     $bst->add($nums[$i]);
@@ -38,5 +38,5 @@ print $bst;
 // 测试removeMax
 $bst->removeMax();
 print $bst;*/
-$bst->remove(8);
+//$bst->remove(8);
 print $bst;

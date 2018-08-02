@@ -60,9 +60,9 @@ class BinarySearchTree
             return new BinaryNode($e);
         }
 
-        if ($e < $node->e) {
+        if (strcmp($e , $node->e) < 0) {
             $node->left = $this->__add($node->left, $e);
-        } elseif ($e > $node->e) {
+        } elseif (strcmp($e , $node->e) >0) {
             $node->right = $this->__add($node->right, $e);
         }
         return $node;
